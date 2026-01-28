@@ -1,0 +1,48 @@
+create databse office;
+
+create table employee(emp_no varchar(10) Primary key,emp_name varchar(20),phno int(10),dept_name varchar(20),job_id int(10),salary int (40));
+
+
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| emp_no    | varchar(10) | NO   | PRI | NULL    |       |
+| emp_name  | varchar(20) | YES  |     | NULL    |       |
+| phno      | int         | YES  |     | NULL    |       |
+| dept_name | varchar(20) | YES  |     | NULL    |       |
+| job_id    | int         | YES  |     | NULL    |       |
+| salary    | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+
+
+create table department(dep_no varchar(30),emp_no int(10),emp_name varchar(50));
+
+
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| dep_no   | varchar(30) | YES  |     | NULL    |       |
+| emp_no   | int         | YES  |     | NULL    |       |
+| emp_name | varchar(50) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+
+ alter table employee add hired_date date;
+
+
+ alter table employee modify column job_id varchar(20);
+
+
+
+
+alter table employee rename column emp_no to e_no;
+
+ alter table employee modify column job_id int(10);
+
+ alter table employee drop column hired_date;
+
+
+mysql> rename table employee to emp;
+
+
+
