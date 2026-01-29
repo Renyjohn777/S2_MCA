@@ -1,0 +1,98 @@
+  
+  
+create database college;
+  
+  
+  
+use college;
+
+create table student(rollno int(10),name varchar(30),dob date,place varchar(30),phno int(10));
+
+create table course(course_code int(10),course_name Varchar(30),credit int(6));
+
+show tables;
+
++-------------------+
+| Tables_in_college |
++-------------------+
+| course            |
+| student           |
++-------------------+
+
+
+Desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | YES  |     | NULL    |       |
+| name   | varchar(30) | YES  |     | NULL    |       |
+| dob    | date        | YES  |     | NULL    |       |
+| place  | varchar(30) | YES  |     | NULL    |       |
+| phno   | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+
+
+Desc course;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| course_code | int         | YES  |     | NULL    |       |
+| course_name | varchar(30) | YES  |     | NULL    |       |
+| credit      | int         | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+
+
+alter table student drop phno;
+
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | YES  |     | NULL    |       |
+| name   | varchar(30) | YES  |     | NULL    |       |
+| dob    | date        | YES  |     | NULL    |       |
+| place  | varchar(30) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+
+alter table student add aadhar_no varchar(60);
+
+
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| rollno    | int         | YES  |     | NULL    |       |
+| name      | varchar(30) | YES  |     | NULL    |       |
+| dob       | date        | YES  |     | NULL    |       |
+| place     | varchar(30) | YES  |     | NULL    |       |
+| aadhar_no | varchar(60) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+
+alter table student modify column rollno varchar(10);
+
+
+mysql> Desc student;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| rollno    | varchar(10) | YES  |     | NULL    |       |
+| name      | varchar(30) | YES  |     | NULL    |       |
+| dob       | date        | YES  |     | NULL    |       |
+| place     | varchar(30) | YES  |     | NULL    |       |
+| aadhar_no | varchar(60) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+
+
+drop table student;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| course            |
++-------------------+
+
+drop table course;
+
+drop database college;
+
+
