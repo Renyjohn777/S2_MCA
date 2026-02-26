@@ -1,0 +1,263 @@
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~$ sudo mysql
+[sudo] password for mca: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.44-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create databse office;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'databse office' at line 1
+mysql> create databse office1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'databse office1' at line 1
+mysql> create database office;
+ERROR 1007 (HY000): Can't create database 'office'; database exists
+mysql> drop database office;
+Query OK, 2 rows affected (0.04 sec)
+
+mysql> drop database office;
+ERROR 1008 (HY000): Can't drop database 'office'; database doesn't exist
+mysql> create database office;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> use office;
+Database changed
+mysql> create table employee(emp_no varchar(10) Primary key,emp_name varchar(20),phno int(10),dept_name varchar(20),job_id int(10),salary int (40));
+Query OK, 0 rows affected, 3 warnings (0.04 sec)
+
+mysql> desc employee;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| emp_no    | varchar(10) | NO   | PRI | NULL    |       |
+| emp_name  | varchar(20) | YES  |     | NULL    |       |
+| phno      | int         | YES  |     | NULL    |       |
+| dept_name | varchar(20) | YES  |     | NULL    |       |
+| job_id    | int         | YES  |     | NULL    |       |
+| salary    | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> create table department(dep_no varchar(30),emp_no int(10),emp_name varchar(50));
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> create table persons(person_id int(30) primary key,name varchar(50) not null,aadhar varchar(20) not null unique,age int(10) check(age>18));
+Query OK, 0 rows affected, 2 warnings (0.04 sec)
+
+mysql> desc persons;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| person_id | int         | NO   | PRI | NULL    |       |
+| name      | varchar(50) | NO   |     | NULL    |       |
+| aadhar    | varchar(20) | NO   | UNI | NULL    |       |
+| age       | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table orders order_id int(10) primary key,orderNo varchar(30) not null,person_id int(10),foreign key (person_id) reference persons(person_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order_id int(10) primary key,orderNo varchar(30) not null,person_id int(10),fore' at line 1
+mysql> create table orders order_id int(10) primary key,orderNo varchar(30) not null,person_id int(10),foreign key (person_id) reference persons(person_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order_id int(10) primary key,orderNo varchar(30) not null,person_id int(10),fore' at line 1
+mysql> create table orders (order_id int(10) primary key,orderNo varchar(30) not null,person_id int(10),foreign key (person_id) reference persons(person_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'reference persons(person_id))' at line 1
+mysql> create table orders (order_id int(10) primary key,orderNo varchar(30) not null,person_id int(10),foreign key (person_id) references persons(person_id));
+Query OK, 0 rows affected, 2 warnings (0.05 sec)
+
+mysql> desc persons;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| person_id | int         | NO   | PRI | NULL    |       |
+| name      | varchar(50) | NO   |     | NULL    |       |
+| aadhar    | varchar(20) | NO   | UNI | NULL    |       |
+| age       | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> desc orders;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| order_id  | int         | NO   | PRI | NULL    |       |
+| orderNo   | varchar(30) | NO   |     | NULL    |       |
+| person_id | int         | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc department;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| dep_no   | varchar(30) | YES  |     | NULL    |       |
+| emp_no   | int         | YES  |     | NULL    |       |
+| emp_name | varchar(50) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table department add dep_no int(10) primary key;
+ERROR 1060 (42S21): Duplicate column name 'dep_no'
+mysql> alter table employee add dep_no int,add constraint fk-dept foreign key (dep_no) references department(dep_no on Delete cascade;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-dept foreign key (dep_no) references department(dep_no on Delete cascade' at line 1
+mysql> alter table employee add dep_no int,add constraint fk_dept foreign key (dep_no) references department(dep_no on Delete cascade;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'on Delete cascade' at line 1
+mysql> alter table employee add dep_no int,add constraint fk_dept foreign key (dep_no) references department(dep_no on delete cascade;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'on delete cascade' at line 1
+mysql> alter table employee add dep_no int,add constraint fk_dept foreign key (dep_no) references department(dep_no) on delete cascade;
+ERROR 3780 (HY000): Referencing column 'dep_no' and referenced column 'dep_no' in foreign key constraint 'fk_dept' are incompatible.
+mysql> alter table employee add dep_no int(10),add constraint fk_dept foreign key (dep_no) references department(dep_no on delete cascade;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'on delete cascade' at line 1
+mysql> alter table department add dep_no int(10) primary key;
+ERROR 1060 (42S21): Duplicate column name 'dep_no'
+mysql> alter table department add dept_no int(10) primary key;
+Query OK, 0 rows affected, 1 warning (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> alter table employee add dep_no int(10),add constraint fk_dept foreign key (dep_no) references department(dept_no) on delete cascade;
+Query OK, 0 rows affected, 1 warning (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> alter table orders drop primary key;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into employee values
+    -> (1,'Amith','Manager',;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> desc employee;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| emp_no    | varchar(10) | NO   | PRI | NULL    |       |
+| emp_name  | varchar(20) | YES  |     | NULL    |       |
+| phno      | int         | YES  |     | NULL    |       |
+| dept_name | varchar(20) | YES  |     | NULL    |       |
+| job_id    | int         | YES  |     | NULL    |       |
+| salary    | int         | YES  |     | NULL    |       |
+| dep_no    | int         | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> insert into employee
+    -> (1,'Amith','7736994019','manager',10,25000,11),
+    -> (2,'Amal','7736995029','developer',11,20000,10),
+    -> (3,'Abin','7736994018','manager',12,25000,11),
+    -> (4,'Tom','7736994017','Tester',13,30000,12),(1,'Amith','7736994019','manager',10,25000,11),
+[1]+  Stopped                 sudo mysql
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~$ sudo mysql;
+[sudo] password for mca: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.44-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use office;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> desc employee;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| emp_no    | varchar(10) | NO   | PRI | NULL    |       |
+| emp_name  | varchar(20) | YES  |     | NULL    |       |
+| phno      | int         | YES  |     | NULL    |       |
+| dept_name | varchar(20) | YES  |     | NULL    |       |
+| job_id    | int         | YES  |     | NULL    |       |
+| salary    | int         | YES  |     | NULL    |       |
+| dep_no    | int         | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> Desc department;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| dep_no   | varchar(30) | YES  |     | NULL    |       |
+| emp_no   | int         | YES  |     | NULL    |       |
+| emp_name | varchar(50) | YES  |     | NULL    |       |
+| dept_no  | int         | NO   | PRI | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc persons;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| person_id | int         | NO   | PRI | NULL    |       |
+| name      | varchar(50) | NO   |     | NULL    |       |
+| aadhar    | varchar(20) | NO   | UNI | NULL    |       |
+| age       | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc orders;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| order_id  | int         | NO   |     | NULL    |       |
+| orderNo   | varchar(30) | NO   |     | NULL    |       |
+| person_id | int         | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql>  insert into employee
+    ->     -> (1,'Amith','7736994019','manager',10,25000,11),
+    ->     -> (2,'Amal','7736995029','developer',11,20000,10),
+    ->     -> (3,'Abin','7736994018','manager',12,25000,11),
+    ->     -> (4,'Tom','7736994017','Tester',13,30000,12),(1,'Amith','7736994019','manager',10,25000,11),
+    ->     -> (5,'Alfia','7736994012','manager',15,25000,11);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-> (1,'Amith','7736994019','manager',10,25000,11),
+    -> (2,'Amal','7736995029'' at line 2
+mysql> insert into employee values ('1','Amith','7736994019','manager',10,25000,11),    ('2','Amal','7736995029','developer',11,20000,10),     ('3','Abin','7736994018','manager',12,25000,11),   ('4','Tom','7736994017','Tester',13,30000,12),('5','Amith','7736994019','manager',10,25000,11),     ('6','Alfia','7736994012','manager',15,25000,11);
+ERROR 1264 (22003): Out of range value for column 'phno' at row 1
+mysql> insert into employee values ('1','Amith','773694019','manager',10,25000,11),    ('2','Amal','773695029','developer',11,20000,10),     ('3','Abin','773699018','manager',12,25000,11),   ('4','Tom','773694017','Tester',13,30000,12),('5','Amith','773699019','manager',10,25000,11),     ('6','Alfia','773699412','manager',15,25000,11);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`office`.`employee`, CONSTRAINT `fk_dept` FOREIGN KEY (`dep_no`) REFERENCES `department` (`dept_no`) ON DELETE CASCADE)
+mysql> insert into department values
+    -> insert into department values;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'insert into department values' at line 2
+mysql> insert into department values ('14',3,'tom',13);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from department;
++--------+--------+----------+---------+
+| dep_no | emp_no | emp_name | dept_no |
++--------+--------+----------+---------+
+| 14     |      3 | tom      |      13 |
++--------+--------+----------+---------+
+1 row in set (0.00 sec)
+
+mysql> insert into department values ('14',3,'tom',13), ('15',4,'Manu',14), ('16',5,'Max',10);
+ERROR 1062 (23000): Duplicate entry '13' for key 'department.PRIMARY'
+mysql> insert into department values ('14',3,'tom',11), ('15',4,'Manu',14), ('16',5,'Max',10);
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from department;
++--------+--------+----------+---------+
+| dep_no | emp_no | emp_name | dept_no |
++--------+--------+----------+---------+
+| 16     |      5 | Max      |      10 |
+| 14     |      3 | tom      |      11 |
+| 14     |      3 | tom      |      13 |
+| 15     |      4 | Manu     |      14 |
++--------+--------+----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> insert into department values ('14',3,'tom',13);insert into department values ('14',3,'tom',13);insert into department values ('14',3,'tom',13);
+
+

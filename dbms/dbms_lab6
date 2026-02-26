@@ -1,0 +1,279 @@
+
+
+
+
+mysql> CREATE TABLE Order_Details (
+    ->     Order_Id INT PRIMARY KEY,
+    ->     Product_Name VARCHAR(50),
+    ->     Order_No INT,
+    ->     Order_Date DATE
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc Order_Details;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Order_Id     | int         | NO   | PRI | NULL    |       |
+| Product_Name | varchar(50) | YES  |     | NULL    |       |
+| Order_No     | int         | YES  |     | NULL    |       |
+| Order_Date   | date        | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO Order_Details VALUES
+    -> (1, 'Laptop', 234, '2000-03-02'),
+    -> (2, 'Desktop', 456, '2001-02-02'),
+    -> (3, 'Keyboard', 457, '2000-03-02'),
+    -> (4, 'Mouse', 500, '2001-03-02'),
+    -> (5, 'AntiVirus', 501, '2002-03-02');
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from INSERT INTO Order_Details VALUES
+    -> (1, 'Laptop', 234, '2000-03-02'),
+    -> (2, 'Desktop', 456, '2001-02-02'),
+    -> (3, 'Keyboard', 457, '2000-03-02'),
+    -> (4, 'Mouse', 500, '2001-03-02'),
+    -> (5, 'AntiVirus', 501, '2002-03-02');^C
+mysql> select * from Order_Details;
++----------+--------------+----------+------------+
+| Order_Id | Product_Name | Order_No | Order_Date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Keyboard     |      457 | 2000-03-02 |
+|        4 | Mouse        |      500 | 2001-03-02 |
+|        5 | AntiVirus    |      501 | 2002-03-02 |
++----------+--------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+mysql> INSERT INTO Order_Details VALUES
+    -> (6, 'Printer', 600, '2003-04-01'),
+    -> (7, 'Scanner', 601, '2003-04-02');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Order_Details;
++----------+--------------+----------+------------+
+| Order_Id | Product_Name | Order_No | Order_Date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Keyboard     |      457 | 2000-03-02 |
+|        4 | Mouse        |      500 | 2001-03-02 |
+|        5 | AntiVirus    |      501 | 2002-03-02 |
+|        6 | Printer      |      600 | 2003-04-01 |
+|        7 | Scanner      |      601 | 2003-04-02 |
++----------+--------------+----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> ROLLBACK;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SELECT * FROM Order_Details;
++----------+--------------+----------+------------+
+| Order_Id | Product_Name | Order_No | Order_Date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Keyboard     |      457 | 2000-03-02 |
+|        4 | Mouse        |      500 | 2001-03-02 |
+|        5 | AntiVirus    |      501 | 2002-03-02 |
++----------+--------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+mysql> DELETE FROM Order_Details
+    -> WHERE Order_Id IN (4,5);^C
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+mysql> DELETE FROM Order_Details
+    -> WHERE Order_Id IN (4,5);^C
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+mysql> DELETE FROM Order_Details
+    -> WHERE Order_Id IN (4,5);
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> SELECT * FROM Order_Details;
++----------+--------------+----------+------------+
+| Order_Id | Product_Name | Order_No | Order_Date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Keyboard     |      457 | 2000-03-02 |
++----------+--------------+----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SET autocommit = 0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+mysql> SAVEPOINT svp_update;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> UPDATE Order_Details
+    -> SET Product_Name = 'Gaming Keyboard'
+    -> WHERE Order_No = 457;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Order_Details;
++----------+-----------------+----------+------------+
+| Order_Id | Product_Name    | Order_No | Order_Date |
++----------+-----------------+----------+------------+
+|        1 | Laptop          |      234 | 2000-03-02 |
+|        2 | Desktop         |      456 | 2001-02-02 |
+|        3 | Gaming Keyboard |      457 | 2000-03-02 |
++----------+-----------------+----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO Order_Details VALUES
+    -> (8, 'Webcam', 700, '2004-01-01'),
+    -> (9, 'Speaker', 701, '2004-02-02');
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Order_Details;
++----------+-----------------+----------+------------+
+| Order_Id | Product_Name    | Order_No | Order_Date |
++----------+-----------------+----------+------------+
+|        1 | Laptop          |      234 | 2000-03-02 |
+|        2 | Desktop         |      456 | 2001-02-02 |
+|        3 | Gaming Keyboard |      457 | 2000-03-02 |
+|        8 | Webcam          |      700 | 2004-01-01 |
+|        9 | Speaker         |      701 | 2004-02-02 |
++----------+-----------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SAVEPOINT svp_delete;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM Order_Details;
++----------+-----------------+----------+------------+
+| Order_Id | Product_Name    | Order_No | Order_Date |
++----------+-----------------+----------+------------+
+|        1 | Laptop          |      234 | 2000-03-02 |
+|        2 | Desktop         |      456 | 2001-02-02 |
+|        3 | Gaming Keyboard |      457 | 2000-03-02 |
+|        8 | Webcam          |      700 | 2004-01-01 |
+|        9 | Speaker         |      701 | 2004-02-02 |
++----------+-----------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> DELETE FROM Order_Details
+    -> WHERE Product_Name = 'Desktop';
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Order_Details;
++----------+-----------------+----------+------------+
+| Order_Id | Product_Name    | Order_No | Order_Date |
++----------+-----------------+----------+------------+
+|        1 | Laptop          |      234 | 2000-03-02 |
+|        3 | Gaming Keyboard |      457 | 2000-03-02 |
+|        8 | Webcam          |      700 | 2004-01-01 |
+|        9 | Speaker         |      701 | 2004-02-02 |
++----------+-----------------+----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> ROLLBACK TO svp_delete;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM Order_Details;
++----------+-----------------+----------+------------+
+| Order_Id | Product_Name    | Order_No | Order_Date |
++----------+-----------------+----------+------------+
+|        1 | Laptop          |      234 | 2000-03-02 |
+|        2 | Desktop         |      456 | 2001-02-02 |
+|        3 | Gaming Keyboard |      457 | 2000-03-02 |
+|        8 | Webcam          |      700 | 2004-01-01 |
+|        9 | Speaker         |      701 | 2004-02-02 |
++----------+-----------------+----------+------------+
+5 rows in set (0.01 sec)
+
+mysql> ROLLBACK TO svp_update;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SELECT * FROM Order_Details;
++----------+--------------+----------+------------+
+| Order_Id | Product_Name | Order_No | Order_Date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Keyboard     |      457 | 2000-03-02 |
++----------+--------------+----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+mysql> SET autocommit = 1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM Order_Details;
++----------+--------------+----------+------------+
+| Order_Id | Product_Name | Order_No | Order_Date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Keyboard     |      457 | 2000-03-02 |
++----------+--------------+----------+------------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+mysql> CREATE USER 'new_user'@'localhost' IDENTIFIED BY 'password123';
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> GRANT ALL PRIVILEGES 
+    -> ON Order_Details 
+    -> TO 'new_user'@'localhost';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SHOW GRANTS FOR 'new_user'@'localhost';
++--------------------------------------------------------------------------+
+| Grants for new_user@localhost                                            |
++--------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `new_user`@`localhost`                             |
+| GRANT ALL PRIVILEGES ON `shop`.`Order_Details` TO `new_user`@`localhost` |
++--------------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> REVOKE DELETE, UPDATE 
+    -> ON Order_Details 
+    -> FROM 'new_user'@'localhost';
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SHOW GRANTS FOR 'new_user'@'localhost';
++---------------------------------------------------------------------------------------------------------------------------------------------------+
+| Grants for new_user@localhost                                                                                                                     |
++---------------------------------------------------------------------------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `new_user`@`localhost`                                                                                                      |
+| GRANT SELECT, INSERT, CREATE, DROP, REFERENCES, INDEX, ALTER, CREATE VIEW, SHOW VIEW, TRIGGER ON `shop`.`Order_Details` TO `new_user`@`localhost` |
++---------------------------------------------------------------------------------------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> 
+
+
