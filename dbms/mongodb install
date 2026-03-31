@@ -1,0 +1,45 @@
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~$ wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2204-x86_64-100.9.4.tgz
+--2026-03-31 14:58:40--  https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2204-x86_64-100.9.4.tgz
+Resolving fastdl.mongodb.org (fastdl.mongodb.org)... 108.159.15.106, 108.159.15.52, 108.159.15.31, ...
+Connecting to fastdl.mongodb.org (fastdl.mongodb.org)|108.159.15.106|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 61533761 (59M) [application/x-tar]
+Saving to: ‘mongodb-database-tools-ubuntu2204-x86_64-100.9.4.tgz’
+
+mongodb-database-tools-ubuntu2204-x86_64-100.9.4.t 100%[================================================================================================================>]  58.68M  11.2MB/s    in 5.3s    
+
+2026-03-31 14:58:45 (11.2 MB/s) - ‘mongodb-database-tools-ubuntu2204-x86_64-100.9.4.tgz’ saved [61533761/61533761]
+
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~$ tar -zxvf mongodb-database-tools-ubuntu2204-x86_64-100.9.4.tgz
+mongodb-database-tools-ubuntu2204-x86_64-100.9.4/LICENSE.md
+mongodb-database-tools-ubuntu2204-x86_64-100.9.4/README.md
+mongodb-database-tools-ubuntu2204-x86_64-100.9.4/THIRD-PARTY-NOTICES
+mongodb-database-tools-ubuntu2204-x86_64-100.9.4/bin/bsondump
+mongodb-database-tools-ubuntu2204-x86_64-100.9.4/bin/mongodump
+mongodb-database-tools-ubuntu2204-x86_64-100.9.4/bin/mongoexport
+mongodb-database-tools-ubuntu2204-x86_64-100.9.4/bin/mongofiles
+mongodb-database-tools-ubuntu2204-x86_64-100.9.4/bin/mongoimport
+mongodb-database-tools-ubuntu2204-x86_64-100.9.4/bin/mongorestore
+mongodb-database-tools-ubuntu2204-x86_64-100.9.4/bin/mongostat
+mongodb-database-tools-ubuntu2204-x86_64-100.9.4/bin/mongotop
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~$ cd mongodb-database-tools-ubuntu2204-x86_64-100.9.4/bin
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~/mongodb-database-tools-ubuntu2204-x86_64-100.9.4/bin$ sudo cp * /usr/local/bin/
+[sudo] password for mca: 
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~/mongodb-database-tools-ubuntu2204-x86_64-100.9.4/bin$ mongodump --version
+mongodump version: 100.9.4
+git version: ce6af0fefca324ad5d9cb689d335130f48c99699
+Go version: go1.20.12
+   os: linux
+   arch: amd64
+   compiler: gc
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~/mongodb-database-tools-ubuntu2204-x86_64-100.9.4/bin$ mongorestore --version
+mongorestore version: 100.9.4
+git version: ce6af0fefca324ad5d9cb689d335130f48c99699
+Go version: go1.20.12
+   os: linux
+   arch: amd64
+   compiler: gc
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~/mongodb-database-tools-ubuntu2204-x86_64-100.9.4/bin$ ^C
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~/mongodb-database-tools-ubuntu2204-x86_64-100.9.4/bin$ ^C
+mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC:~/mongodb-database-tools-ubuntu2204-x86_64-100.9.4/bin$ ^C
+
